@@ -1,0 +1,62 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "BaseGeometryActor.h"
+#include "Delegates/Delegate.h"
+#include "GeometryHubActor.generated.h"
+
+USTRUCT(BlueprintType)
+struct FGeometryPayload
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ABaseGeometryActor> GeometryClass;
+	//Safety object class creation of ABaseGeometryActor
+	UPROPERTY(EditAnywhere)
+	FGeometryData Data;
+	//ќбъ€вл€ем FGeometryData из меша структуру внутри Hub
+	UPROPERTY(EditAnywhere)
+	FTransform InitialTransform;
+	// Rotation, Location, Scale 3d
+};
+// 
+
+UCLASS()
+class SANDBOX_API AGeometryHubActor : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+
+	AGeometryHubActor();
+
+protected:
+
+	virtual void BeginPlay() override;
+	
+	UPROPERTY(EditAnywhere) 
+	TSubclassOf<ABaseGeometryActor> GeometryClass; // 1.4 TSubclassOf отображает только объекты ABaseGeometryActor в проекте
+	// 1.4 —оздаем объект класса ABaseGeometryActor который будем спавнить
+	UPROPERTY(EditAnywhere)
+	TArray<FGeometryPayload> GeometryPayloads;
+	// ќбъ€вл€ем массив структур, в Editor создаем несколько элементов такого массива
+
+public:	
+
+	virtual void Tick(float DeltaTime) override;
+
+	void DoActorSpawn1();
+	void DoActorSpawn2();
+	void DoActorSpawn3();
+
+
+	UFUNCTION()
+	void OnColorChanged(const FLinearColor& Color, const FString& Name);
+	void OnTimerFinished(AActor* Actor);
+	// 2.4 ќбъ€вл€ем функции, выполн€ющиес€ при срабатывании делегатов 
+
+};

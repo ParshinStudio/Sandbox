@@ -16,12 +16,15 @@ void AGeometryHubActor::BeginPlay()
 	
 	//DoActorSpawn1();
 	//DoActorSpawn2();
-	DoActorSpawn3();
+	//DoActorSpawn3();
+	DoActorSpawn4();
 }
 
 void AGeometryHubActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	UE_LOG(LogBaseGeometryHub, Warning, TEXT("property pointer %i, is valid %i"), PropertyActor != nullptr, IsValid(PropertyActor));
+
 }
 
 void AGeometryHubActor::DoActorSpawn1()
@@ -93,6 +96,17 @@ void AGeometryHubActor::DoActorSpawn3()
 			}
 		}
 	}
+}
+
+void AGeometryHubActor::DoActorSpawn4()
+{
+	if (!GetWorld()) return;
+
+	FTransform GeometryTransform = FTransform(FRotator::ZeroRotator, FVector(300.0f, 330.0f, 300.0f));
+	NonePropertyActor = GetWorld()->SpawnActorDeferred<ABaseGeometryActor>(GeometryClass, GeometryTransform);
+
+	GeometryTransform = FTransform(FRotator::ZeroRotator, FVector(400.0f, 700.0f, 700.0f));
+	PropertyActor = GetWorld()->SpawnActorDeferred<ABaseGeometryActor>(GeometryClass, GeometryTransform);
 }
 
 void AGeometryHubActor::OnColorChanged(const FLinearColor& Color, const FString& Name)

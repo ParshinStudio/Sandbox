@@ -33,6 +33,7 @@ class SANDBOX_API AGeometryHubActor : public AActor
 public:	
 
 	AGeometryHubActor();
+	virtual void Tick(float DeltaTime) override;
 
 protected:
 
@@ -45,13 +46,16 @@ protected:
 	TArray<FGeometryPayload> GeometryPayloads;
 	// ќбъ€вл€ем массив структур, в Editor создаем несколько элементов такого массива
 
-public:	
+private:	
 
-	virtual void Tick(float DeltaTime) override;
-
+	ABaseGeometryActor* NonePropertyActor;
+	UPROPERTY()
+	ABaseGeometryActor* PropertyActor;
+	
 	void DoActorSpawn1();
 	void DoActorSpawn2();
 	void DoActorSpawn3();
+	void DoActorSpawn4();
 
 
 	UFUNCTION()

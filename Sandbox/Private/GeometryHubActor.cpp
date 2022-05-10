@@ -24,10 +24,11 @@ void AGeometryHubActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	UE_LOG(LogBaseGeometryHub, Warning, TEXT("property pointer %i, is valid %i"), PropertyActor != nullptr, IsValid(PropertyActor));
-
+	UE_LOG(LogBaseGeometryHub, Warning, TEXT("none property pointer %i, is valid %i"), NonePropertyActor != nullptr, IsValid(NonePropertyActor));
+	// Выводим в консоль информацию о валидности акторов
 }
 
-void AGeometryHubActor::DoActorSpawn1()
+void AGeometryHubActor::DoActorSpawn1() // Создание циклом 
 {
 	UWorld* World = GetWorld(); // 1.2 GetWorld получает указатель на мир, World объект класса UWorld
 	if (World) // 1.3 Проверяем, что указатель имеет значение мира
@@ -51,7 +52,7 @@ void AGeometryHubActor::DoActorSpawn1()
 	}
 }
 
-void AGeometryHubActor::DoActorSpawn2()
+void AGeometryHubActor::DoActorSpawn2() // Создание циклом 
 {
 	UWorld* World = GetWorld();
 	if (World)
@@ -73,9 +74,9 @@ void AGeometryHubActor::DoActorSpawn2()
 
 		}
 	}
-}
+} 
 
-void AGeometryHubActor::DoActorSpawn3()
+void AGeometryHubActor::DoActorSpawn3()// Создание из массива циклом
 {
 	UWorld* World = GetWorld();
 	if (World)
@@ -98,7 +99,7 @@ void AGeometryHubActor::DoActorSpawn3()
 	}
 }
 
-void AGeometryHubActor::DoActorSpawn4()
+void AGeometryHubActor::DoActorSpawn4() // Простое последовательное создание
 {
 	if (!GetWorld()) return;
 
@@ -107,6 +108,9 @@ void AGeometryHubActor::DoActorSpawn4()
 
 	GeometryTransform = FTransform(FRotator::ZeroRotator, FVector(400.0f, 700.0f, 700.0f));
 	PropertyActor = GetWorld()->SpawnActorDeferred<ABaseGeometryActor>(GeometryClass, GeometryTransform);
+	// Создаем 2 актора (пример работы с GarbageCollector) Необходимо задавать проперти всегда
+
+	UE_LOG(LogBaseGeometryHub, Warning, TEXT("ActorsSpawned"));
 }
 
 void AGeometryHubActor::OnColorChanged(const FLinearColor& Color, const FString& Name)

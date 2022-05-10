@@ -51,6 +51,7 @@ private:
 	ABaseGeometryActor* NonePropertyActor;
 	UPROPERTY()
 	ABaseGeometryActor* PropertyActor;
+	// ќбъ€вл€ем пример класса с uproperty и без
 	
 	void DoActorSpawn1();
 	void DoActorSpawn2();
